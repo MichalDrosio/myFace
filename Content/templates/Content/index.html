@@ -2,13 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}MyFace{% endblock %}</title>
 </head>
 <body>
-{% for post in posts %}
-    <p>{{post.date_added}}</p>
-    <p>{{post.text}}</p>
-    <br>
-{% endfor %}
+
+    <span class="user">
+        <div>
+            {% if request.user.is_authenticated %}
+                <p><strong>Witaj {{ request.user.email }}</strong> </p>
+
+            {% else %}
+                <p><a href="{% url 'Account:login' %}">Logowanie</a>  </p>
+                <p><a href="{% url 'Account:register' %}">Załóż konto</a></p>
+
+            {% endif %}
+        </div>
+    </span>
+
+
+
+{% block content %}
+ksldfnsldkjfnsdlf
+{% endblock %}
 </body>
 </html>

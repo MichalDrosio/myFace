@@ -1,0 +1,7 @@
+<h1>Utwórz konto</h1>
+<p>Wypełnij formularz aby założyć konto</p>
+    <form action="." method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Create account"></p>
+    </form>
