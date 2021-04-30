@@ -9,8 +9,11 @@
     <span class="user">
         <div>
             {% if request.user.is_authenticated %}
-                <p><strong>Witaj {{ request.user.email }}</strong> </p>
-
+                <p><strong>Witaj {{ request.user.username }}!
+                <a href="{% url 'Account:logout' %}">Wyloguj</a></strong> </p>
+                    <span class="new_post">
+                        <p><a href="{% url 'Content:add_post' %}">New post</a></p>
+                    </span>
             {% else %}
                 <p><a href="{% url 'Account:login' %}">Logowanie</a>  </p>
                 <p><a href="{% url 'Account:register' %}">Załóż konto</a></p>
@@ -18,6 +21,8 @@
             {% endif %}
         </div>
     </span>
+
+
 
 
 
