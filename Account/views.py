@@ -12,7 +12,6 @@ from django.http import HttpResponse
 def login_user(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        errors = 'złe dane'
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(request,
@@ -44,3 +43,5 @@ def register_user(request):
 def user_logout(request):
     logout(request)
     return render(request, 'Content/index.html')
+
+

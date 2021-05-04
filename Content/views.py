@@ -1,5 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.views import View
+from Content.paginator import pag
 from Content.models import Post
 from Content.forms import AddPostForm
 
@@ -18,9 +21,19 @@ def add_post(request):
         form = AddPostForm(data, request.FILES)
         if form.is_valid():
             new_post = form.save(commit=False)
-            new_post.user = request.user
+            new_post.author = request.user
             new_post.save()
             return redirect('Content:index')
     else:
         form = AddPostForm()
         return render(request, 'Content/add_post.html', {'form': form})
+
+
+class DetailPost(View):
+    def get(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        return render(request, 'Content/detail_post.html', {'post': post})
+
+
+
+
