@@ -26,6 +26,11 @@
             <p>{{ post.author }}</p>
             <P>{{ post.text }}</P>
             <p>{{ post.date_added }}</p>
+            {% if request.user.is_authenticated %}
+                {% if post.author == request.user %}
+                    <p><a href="{% url 'Content:delete_post' post.id %}">Delete</a> </p>
+                {% endif %}
+            {% endif %}
         {% endfor %}
     </div>
 

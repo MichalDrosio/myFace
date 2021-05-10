@@ -20,7 +20,7 @@ def login_user(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, 'Content/index.html')
+                    return redirect('Account:user_detail')
     else:
         form = LoginForm()
     return render(request, 'Account/login.html', {'form': form})
@@ -33,7 +33,7 @@ def register_user(request):
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
-            return render(request, 'Content/index.html', {'form': form})
+            return redirect('Content:login_user')
     else:
         form = UserRegistrationForm()
     return render(request, 'Account/register.html', {'form': form})
@@ -43,5 +43,10 @@ def register_user(request):
 def user_logout(request):
     logout(request)
     return render(request, 'Content/index.html')
+
+
+@login_required
+def user_detail(request):
+    return render(request, 'Account/user_detail.html')
 
 

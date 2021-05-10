@@ -26,7 +26,7 @@ def add_post(request):
             return redirect('Content:index')
     else:
         form = AddPostForm()
-        return render(request, 'Content/add_post.html', {'form': form})
+    return render(request, 'Content/add_post.html', {'form': form})
 
 
 class DetailPost(View):
@@ -35,5 +35,11 @@ class DetailPost(View):
         return render(request, 'Content/detail_post.html', {'post': post})
 
 
+@login_required
+def delete_post(request, post_id):
+    posts = Post.objects.filter(author=request.user)
+    post = posts.get(pk=post_id)
+    post.delete()
+    return redirect('/')
 
 
