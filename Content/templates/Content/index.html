@@ -24,7 +24,7 @@
     <div>
         {% for post in posts %}
             <p>{{ post.author }}</p>
-            <P>{{ post.text }}</P>
+            <P><a href="{{ post.get_absolute_url }}">{{ post.text }}</a></P>
             <p>{{ post.date_added }}</p>
             {% if request.user.is_authenticated %}
                 {% if post.author == request.user %}

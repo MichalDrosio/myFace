@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.urls import reverse
-from django.views import View
-from Content.paginator import pag
-from Content.models import Post
-from Content.forms import AddPostForm
+
+from Content.models import Post, Comment
+from Content.forms import AddPostForm, AddCommentForm
 
 # Create your views here.
 
@@ -29,10 +30,25 @@ def add_post(request):
     return render(request, 'Content/add_post.html', {'form': form})
 
 
-class DetailPost(View):
-    def get(self, request, id):
-        post = get_object_or_404(Post, id=id)
-        return render(request, 'Content/detail_post.html', {'post': post})
+@login_required
+def detail_post(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    comments = Comment.objects.filter(post_id=post)
+    data = request.POST
+    if request.method == 'POST':
+        form = AddCommentForm(data, request.FILES)
+        if form.is_valid():
+            new_form = form.save(commit=False)
+            new_form.author = request.user
+            new_form.post = post
+            new_form.save()
+            messages.success(request, 'Added comment ')
+        else:
+            messages.error(request, 'There was an error adding your comment')
+        return HttpResponseRedirect(reverse('Content:detail_post', args=[post_id]))
+    else:
+        form = AddCommentForm()
+    return render(request, 'Content/detail_post.html', {'post': post, 'form': form, 'comments': comments})
 
 
 @login_required
@@ -41,5 +57,7 @@ def delete_post(request, post_id):
     post = posts.get(pk=post_id)
     post.delete()
     return redirect('/')
+
+
 
 

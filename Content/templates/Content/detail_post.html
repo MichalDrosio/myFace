@@ -1,7 +1,20 @@
-<div>
-        {% for post in posts %}
-            <p>{{ post.author }}</p>
-            <p>{{ post.content }}</p>
-            <p>{{ post.date_added }}</p>
-        {% endfor %}
-</div>
+<p>{{ post.author }}</p>
+<p>{{ post.date_added }}</p>
+
+<p>{{ post.text }}</p>
+<p>{{ post.image }}</p>
+
+
+<p>Add comment</p>
+<form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Save"></p>
+</form>
+
+{% for comment in comments %}
+    <p><strong>Autor</strong>:{{ comment.author }}</p>
+    <p>Dodano:{{ comment.date_added }}</p>
+    <p><strong>Treść:</strong></p>
+    <p>{{ comment.text }}</p>
+{% endfor %}

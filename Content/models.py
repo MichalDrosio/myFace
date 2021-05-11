@@ -15,8 +15,8 @@ class Post(models.Model):
     def __str__(self):
         return self.text
 
-    # def get_absolute_url(self):
-    #     return reverse('Content:detail_post', args=[self.id])
+    def get_absolute_url(self):
+        return reverse('Content:detail_post', args=[self.id])
 
 
 class Comment(models.Model):
