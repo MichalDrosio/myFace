@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # Create your views here.
+from Message.models import Message
 
 
 def login_user(request):
@@ -47,6 +48,9 @@ def user_logout(request):
 
 @login_required
 def user_detail(request):
+    # messages_sender = Message.objects.filtre(sender=request.user)
+    # messages_receiver = Message.objects.filtre(receiver=request.user)
     return render(request, 'Account/user_detail.html')
+                  # {'messages_receiver': messages_receiver, 'messages_sender': messages_sender})
 
 

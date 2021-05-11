@@ -9,7 +9,8 @@
     <span class="user">
         <div>
             {% if request.user.is_authenticated %}
-                <p><strong>Hello {{ request.user.username }}!
+            <p><strong>Hello <a href="{% url 'Account:user_detail' %}">{{ request.user.username }}!</a>
+                <a href="{% url 'Message:list_messages' %}">Message</a>
                 <a href="{% url 'Account:logout' %}">Log out</a></strong> </p>
                     <span class="new_post">
                         <p><a href="{% url 'Content:add_post' %}">New post</a></p>

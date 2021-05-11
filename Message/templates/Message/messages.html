@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="{% url 'Message:create_message' %}"> new message</a>
+
+
+<p>Messages sent</p>
+{% for message in messages_sender %}
+    <p>{{ message.receiver }}</p>
+    <p>{{ message.message_content }}</p>
+{% endfor %}
+
+<p>Messgaes receivered</p>
+{% for message in messages_sender %}
+    <p>{{ message.sender }}</p>
+    <p>{{ message.message_content }}</p>
+{% endfor %}
+</body>
+</html>
