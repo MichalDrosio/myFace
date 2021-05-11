@@ -9,11 +9,13 @@
 
 
 <p>Messages sent</p>
-{% for message in messages_sender %}
+{% for message in messages_receiver %}
     <p>{{ message.receiver }}</p>
     <p>{{ message.message_content }}</p>
 {% endfor %}
 
+
+------------------------------------------------
 <p>Messgaes receivered</p>
 {% for message in messages_sender %}
     <p>{{ message.sender }}</p>

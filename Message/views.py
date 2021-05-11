@@ -6,8 +6,8 @@ from Message.forms import CreateMessageForm
 
 @login_required
 def list_messages(request):
-    messages_receiver = Message.objects.filter(receiver=request.user)
-    messages_sender = Message.objects.filter(sender=request.user)
+    messages_receiver = Message.objects.filter(sender=request.user)
+    messages_sender = Message.objects.filter(receiver=request.user)
     return render(request, 'Message/messages.html',
                   {'messages_receiver': messages_receiver, 'messages_sender': messages_sender})
 
