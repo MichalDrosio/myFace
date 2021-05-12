@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from Message.models import Message
 from Message.forms import CreateMessageForm
@@ -7,11 +8,27 @@ from Message.forms import CreateMessageForm
 @login_required
 def list_messages(request):
     messages_receiver = Message.objects.filter(sender=request.user)
+    receiver_message = []
+    for i in messages_receiver:
+        if i.receiver not in receiver_message:
+            receiver_message.append(i)
     messages_sender = Message.objects.filter(receiver=request.user)
+    sender_message = []
+    for j in messages_sender:
+        if j.sender not in sender_message:
+            sender_message.append(j)
     return render(request, 'Message/messages.html',
-                  {'messages_receiver': messages_receiver, 'messages_sender': messages_sender})
+                  {'messages_receiver': messages_receiver, 'messages_sender': messages_sender,
+                   'receiver_message': receiver_message, 'sender_message': sender_message})
 
 
+@login_required
+def messages_users(request, user_id):
+    user_mes = Message.objects.get(id=user_id)
+    return render(request, 'Message/list_messages.html')
+
+
+@login_required
 def create_message(request):
     if request.method == 'POST':
         message_form = CreateMessageForm(request.POST)

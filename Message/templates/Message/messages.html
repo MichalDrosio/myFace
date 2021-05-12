@@ -7,19 +7,30 @@
 <body>
 <a href="{% url 'Message:create_message' %}"> new message</a>
 
-
+<span>
 <p>Messages sent</p>
-{% for message in messages_receiver %}
+{% for message in receiver_message %}
     <p>{{ message.receiver }}</p>
+    <p>{{ message.message_title }}</p>
     <p>{{ message.message_content }}</p>
++++++++++++++++++++++++++++++++++++++++++++++++++
 {% endfor %}
+</span>
 
 
-------------------------------------------------
+
+
+<span>
 <p>Messgaes receivered</p>
-{% for message in messages_sender %}
+{% for message in sender_message %}
     <p>{{ message.sender }}</p>
+    <p>{{ message.message_title }}</p>
     <p>{{ message.message_content }}</p>
++++++++++++++++++++++++++++++++++++++++++++++++++++
 {% endfor %}
+</span>
+
+
 </body>
 </html>
+
