@@ -41,10 +41,10 @@ def detail_post(request, post_id):
             new_form = form.save(commit=False)
             new_form.author = request.user
             new_form.post = post
-            new_form.save()
-            # messages.success(request, 'Added comment ')
-        # else:
-        #     messages.error(request, 'There was an error adding your comment')
+            if new_form.save():
+                messages.success(request, 'Comment has been added')
+            else:
+                messages.error(request, 'There was an error adding your comment')
         return HttpResponseRedirect(reverse('Content:detail_post', args=[post_id]))
     else:
         form = AddCommentForm()
@@ -57,6 +57,16 @@ def delete_post(request, post_id):
     post = posts.get(pk=post_id)
     post.delete()
     return redirect('/')
+
+
+def delete_comment(request, post_id, comment_id):
+    comments = Comment.objects.filter(author=request.user)
+    comment = get_object_or_404(comments, pk=comment_id)
+    if comment.delete():
+        messages.success(request, f"Comment {comment.author}  has been deleted")
+    else:
+        messages.error(request, "You cannot delete this post")
+    return redirect('Content:detail_post', post_id)
 
 
 

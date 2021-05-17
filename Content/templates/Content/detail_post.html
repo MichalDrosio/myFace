@@ -17,4 +17,18 @@
     <p>Dodano:{{ comment.date_added }}</p>
     <p><strong>Treść:</strong></p>
     <p>{{ comment.text }}</p>
+    {% if request.user.is_authenticated %}
+        {% if comment.author == request.user  %}
+            <p><a href="{% url 'Content:delete_comment' post.id comment.id%}">Delete</a> </p>
+{% if messages %}
+        <div class="row">
+            <div class="col-xs-12">
+                {% for message in messages %}
+                    <p>{% if message.tags. %} class ="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+        {% endif %}
+    {% endif %}
 {% endfor %}
