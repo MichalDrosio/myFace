@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -16,8 +17,15 @@ def index(request):
         posts = Post.objects.filter(Q(date_added__icontains=search_query) |Q(post_title__icontains=search_query))
     else:
         posts = Post.objects.all()
-
-    return render(request, 'Content/index.html', {'posts': posts})
+        paginator = Paginator(posts, 3)
+        page = request.GET.get('page', 1)
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+    return render(request, 'Content/index.html', {'posts': posts, 'page': posts})
 
 
 @login_required
