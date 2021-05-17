@@ -1,10 +1,9 @@
 {% if page.has_previous %}
-    <a class="page-link" href="?page={{ page.previous_page_number }}">Poprzednia</a>
+    <a class="page-link" href="?page={{ pag.previous_page_number }}">Poprzednia</a>
 {% endif %}
 
-<a class="page-link">Page {{ page.number }} of {{ page.paginator.num_pages }}</a>
+<a class="page-link">Page {{ pag.number }} of {{ pag.paginator.num_pages }}</a>
 
 {% if page.has_next %}
-    <a class="page-link" href="?page={{ page.next_page_number }}">Następna</a>
+    <a class="page-link" href="?page={{ pag.next_page_number }}">Następna</a>
 {% endif %}
-{% include 'Content/pagination.html' with page=page %}

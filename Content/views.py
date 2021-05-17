@@ -3,15 +3,20 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse
-
+from Content.paginator import pag
 from Content.models import Post, Comment
 from Content.forms import AddPostForm, AddCommentForm
-
+from django.db.models import Q
 # Create your views here.
 
 
 def index(request):
-    posts = Post.objects.all()
+    search_query = request.GET.get('search', '')
+    if search_query:
+        posts = Post.objects.filter(Q(date_added__icontains=search_query) |Q(post_title__icontains=search_query))
+    else:
+        posts = Post.objects.all()
+
     return render(request, 'Content/index.html', {'posts': posts})
 
 
@@ -43,8 +48,6 @@ def detail_post(request, post_id):
             new_form.post = post
             if new_form.save():
                 messages.success(request, 'Comment has been added')
-            else:
-                messages.error(request, 'There was an error adding your comment')
         return HttpResponseRedirect(reverse('Content:detail_post', args=[post_id]))
     else:
         form = AddCommentForm()

@@ -32,6 +32,10 @@
             {% endif %}
         </div>
     </span>
+<form class="search" action="{% url 'Content:index' %}">
+    <input type="search" placeholder="Szukaj" name="search">
+    <button type="submit">Search</button>
+</form>
     <div>
         {% for post in posts %}
             <p>{{ post.author }}</p>
@@ -46,6 +50,6 @@
     </div>
 
 
-
+{% include 'Content/pagination.html' with pag=pag %}
 </body>
 </html>

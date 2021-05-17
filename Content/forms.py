@@ -5,7 +5,7 @@ from django import forms
 class AddPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['text', 'image']
+        fields = ['post_title', 'text', 'image']
 
 
 class AddCommentForm(forms.ModelForm):
