@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # Create your views here.
-from Message.models import Message
+
 
 
 def login_user(request):
@@ -34,7 +34,8 @@ def register_user(request):
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
-            return redirect('Content:login_user')
+            messages.success(request, 'Thank you for joining, now you can log in')
+            return redirect('Content:index',)
     else:
         form = UserRegistrationForm()
     return render(request, 'Account/register.html', {'form': form})

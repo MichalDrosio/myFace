@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+
 from django.shortcuts import render
 from Message.models import Message
 from Message.forms import CreateMessageForm
+from django.contrib import messages
 
 
 @login_required
@@ -40,3 +41,11 @@ def create_message(request):
     else:
         message_form = CreateMessageForm()
     return render(request, 'Message/send_box.html', {'message_form': message_form})
+
+
+def index_message(request):
+    return render(request, 'Message/index_message.html')
+
+
+def room(request, room_name):
+    return render(request, 'Message/room.html', {"room_name": room_name})

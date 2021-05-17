@@ -42,9 +42,9 @@ def detail_post(request, post_id):
             new_form.author = request.user
             new_form.post = post
             new_form.save()
-            messages.success(request, 'Added comment ')
-        else:
-            messages.error(request, 'There was an error adding your comment')
+            # messages.success(request, 'Added comment ')
+        # else:
+        #     messages.error(request, 'There was an error adding your comment')
         return HttpResponseRedirect(reverse('Content:detail_post', args=[post_id]))
     else:
         form = AddCommentForm()
