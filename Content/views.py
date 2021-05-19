@@ -14,7 +14,7 @@ from django.db.models import Q
 def index(request):
     search_query = request.GET.get('search', '')
     if search_query:
-        posts = Post.objects.filter(Q(date_added__icontains=search_query) |Q(post_title__icontains=search_query))
+        posts = Post.objects.filter(Q(date_added__icontains=search_query) | Q(post_title__icontains=search_query))
     else:
         posts = Post.objects.all()
         paginator = Paginator(posts, 3)

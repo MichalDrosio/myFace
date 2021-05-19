@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('Content.urls', namespace='Content')),
     path('account/', include('Account.urls', namespace='Account')),
     path('message/', include('Message.urls', namespace='Message')),
+    path('api/', include('API.urls', namespace='API'))
 
 ]
